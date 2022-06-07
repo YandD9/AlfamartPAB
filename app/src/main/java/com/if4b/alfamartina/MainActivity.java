@@ -1,10 +1,13 @@
 package com.if4b.alfamartina;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -21,7 +24,24 @@ public class MainActivity extends AppCompatActivity {
         rvAlfam.setHasFixedSize(true);
 
         data.addAll(DataAlfamart.ambilAlfamart());
+        menampilkanCard();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_top_right, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_mode_kartu:
+                menampilkanCard();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void menampilkanCard(){

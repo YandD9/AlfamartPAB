@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class AdapterCard extends RecyclerView.Adapter<AdapterCard.CardViewHolder>{
@@ -16,6 +18,16 @@ public class AdapterCard extends RecyclerView.Adapter<AdapterCard.CardViewHolder
 
     public AdapterCard(ArrayList<Alfamart> dataAlfamart) {
         this.dataAlfamart = dataAlfamart;
+    }
+
+    public interface OnItemClickCallBack {
+
+        void onItemClicked(Alfamart alfamart);
+    }
+
+    private AdapterCard.OnItemClickCallBack callBack;
+    public void setOnItemClickCallBack(AdapterCard.OnItemClickCallBack callBack){
+        this.callBack = callBack;
     }
 
     @NonNull
@@ -32,7 +44,15 @@ public class AdapterCard extends RecyclerView.Adapter<AdapterCard.CardViewHolder
         holder.tvNamaAlfam.setText(alfa.getNama());
         holder.tvTentangAlfam.setText(alfa.getAlamat());
 
-        
+        Glide.with(holder.itemView.getContext())
+                .load(alfa.getFoto())
+                .into(holder.ivAlfamart);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                callBack.onItemClicked(dataAlfamart.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
